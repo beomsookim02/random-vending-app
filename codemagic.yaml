@@ -24,6 +24,20 @@ workflows:
         script: |
           npx cap sync ios
 
+      - name: Enforce iPhone app icon configuration
+        script: |
+          # This app is iPhone-only. Capacitor/Xcode project defaults may include iPad.
+          sed -i '' 's/TARGETED_DEVICE_FAMILY = "1,2";/TARGETED_DEVICE_FAMILY = 1;/g' ios/App/App.xcodeproj/project.pbxproj
+
+          # Ensure the final plist used by the archive explicitly points to AppIcon.
+          /usr/libexec/PlistBuddy -c "Delete :CFBundleIconName" ios/App/App/Info.plist 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Add :CFBundleIconName string AppIcon" ios/App/App/Info.plist
+
+          # Fail early if the expected AppIcon asset is not present.
+          test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
+          grep -q 'AppIcon-512@2x.png' ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
+          test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
+
       - name: Set up code signing
         script: |
           xcode-project use-profiles
