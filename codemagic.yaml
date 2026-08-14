@@ -33,10 +33,22 @@ workflows:
           /usr/libexec/PlistBuddy -c "Delete :CFBundleIconName" ios/App/App/Info.plist 2>/dev/null || true
           /usr/libexec/PlistBuddy -c "Add :CFBundleIconName string AppIcon" ios/App/App/Info.plist
 
+          ICON_PATH="ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png.png"
+
           # Fail early if the expected AppIcon asset is not present.
           test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
           grep -q 'AppIcon-512@2x.png.png' ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
-          test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png.png
+          test -f "$ICON_PATH"
+
+          # The source icon is larger than Apple's required 1024x1024 App Store icon.
+          # Resize it in-place before Xcode compiles the asset catalog.
+          sips -z 1024 1024 "$ICON_PATH" --out "$ICON_PATH"
+
+          # Verify the resized dimensions before archiving.
+          WIDTH=$(sips -g pixelWidth "$ICON_PATH" | awk '/pixelWidth/ {print $2}')
+          HEIGHT=$(sips -g pixelHeight "$ICON_PATH" | awk '/pixelHeight/ {print $2}')
+          test "$WIDTH" = "1024"
+          test "$HEIGHT" = "1024"
 
       - name: Set up code signing
         script: |
