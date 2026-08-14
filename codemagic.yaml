@@ -35,8 +35,8 @@ workflows:
 
           # Fail early if the expected AppIcon asset is not present.
           test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
-          grep -q 'AppIcon-512@2x.png' ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
-          test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
+          grep -q 'AppIcon-512@2x.png.png' ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
+          test -f ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png.png
 
       - name: Set up code signing
         script: |
