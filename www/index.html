@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#202225" />
+  <title>뭐든 나오는 자판기</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="title-wrap">
+      <div class="sparkle">✦</div>
+      <h1><span>뭐든 나오는</span><strong>자판기</strong></h1>
+      <div class="sparkle right">✦</div>
+    </header>
+
+    <section class="scene">
+      <div class="note note-left">오늘은<br>뭘 뽑을까?</div>
+      <div class="note note-right">이 안에<br>모든 것이<br>있다?!</div>
+
+      <div id="machine" class="machine">
+        <div class="machine-top">
+          <span class="sticker">❓</span>
+          <span class="machine-label">뭐든지 나와요!</span>
+          <span class="sticker">🌈</span>
+        </div>
+
+        <div id="display" class="display">
+          <div id="legendFx" class="legend-fx hidden" aria-hidden="true"></div>
+          <div id="mystery" class="mystery">?</div>
+          <div id="resultCard" class="result-card hidden">
+            <div id="rarityBadge" class="rarity-badge">보통</div>
+            <div id="resultEmoji" class="result-emoji">🧻</div>
+            <h2 id="resultName">보통 휴지</h2>
+            <p id="resultLine">그냥 평범하다.</p>
+            <div id="newBadge" class="new-badge hidden">NEW!</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="drawButton" class="draw-button" type="button">
+            <span>뽑기</span>
+          </button>
+
+          <div class="coin-panel">
+            <div class="slot"></div>
+            <div id="luckText" class="luck-text">행운을<br>빌어요!</div>
+            <div class="keyhole">◉</div>
+          </div>
+        </div>
+
+        <div class="chute-wrap">
+          <div class="arrow">↓</div>
+          <div id="chute" class="chute">
+            <div id="chuteItem" class="chute-item"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="bottom-bar">
+      <button id="collectionButton" class="collection-main" type="button">
+        <span class="box-icon">📦</span>
+        <span>보관함</span>
+        <strong id="collectionCount">0 / 100</strong>
+      </button>
+      <button id="resetButton" class="small-button" type="button" aria-label="보관함 초기화">↻</button>
+    </nav>
+  </main>
+
+  <dialog id="collectionDialog" class="collection-dialog">
+    <div class="dialog-head">
+      <div>
+        <span class="eyebrow">COLLECTION</span>
+        <h2>보관함</h2>
+      </div>
+      <button id="closeCollection" class="close-button" type="button">✕</button>
+    </div>
+    <div id="raritySummary" class="rarity-summary"></div>
+    <div id="collectionGrid" class="collection-grid"></div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
